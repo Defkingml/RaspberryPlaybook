@@ -1,0 +1,4 @@
+
+[lab]
+localhost ansible_host=Lauertechnik.de ansible_port=1609 ansible_user=ubuntu
+
