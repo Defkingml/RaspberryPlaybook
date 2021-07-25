@@ -2,9 +2,20 @@
 
 - hosts: all
   become: true
+  pre_tasks:
+
+  - name: install updates
+    tags: always
+    apt:
+      upgrade: dist
+      update_cache: yes
+
+- hosts: lab
+  become: true
   tasks:
 
   - name: install apache and php for Ubuntu Debian servers
+    tags: apache2,php
     apt:
       name:
         - apache2

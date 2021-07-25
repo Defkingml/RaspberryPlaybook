@@ -1,4 +1,5 @@
 
 [lab]
-localhost ansible_host=Lauertechnik.de ansible_port=1609 ansible_user=ubuntu
-
+ubuntu ansible_host=Lauertechnik.de ansible_port=1609 ansible_user=ubuntu
+[Teamspeakserver]
+teamspeak ansible_host=Lauertechnik.de ansible_port=2801 ansible_user=pi
