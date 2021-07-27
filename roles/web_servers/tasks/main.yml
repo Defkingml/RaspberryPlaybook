@@ -1,0 +1,7 @@
+ - name: install apache2 package
+   tags: apache,apache2,ubuntu
+   apt:
+     name:
+       - apache2
+       - libapache2-mod-php
+     state: latest

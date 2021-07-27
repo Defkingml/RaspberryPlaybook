@@ -1,43 +1,36 @@
----
-
-- hosts: all
-  become: true
-  pre_tasks:
-
-  - name: update repo cache
-    tags: always
-    apt:
-      update_cache: yes
-    changed_when: false
-
-- hosts: all
-  become: true
-  tasks:
-
-  - name: add ssh key for marcel
-    tags: always
-    authorized_key:
-      user: marcel
-      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEv5IiyjMo2+TC10xpNvDjOukmHtpBfvJMfjZ+AyZVmK ansible"
-
-- hosts: lab
-  become: true
-  tasks:
-
-  - name: install apache and php for Ubuntu Debian servers
-    tags: apache2,php
-    apt:
-      name:
-        - apache2
-        - libapache2-mod-php
-      state: latest
-      update_cache: yes
-
-  - name: copy default html file for site
-    tags: apache2,html
-    copy:
-      src: roles/common/files/default_site.html
-      dest: /var/www/html/index.html
-      owner: root
-      group: root
-      mode: 0644
+ ---
+ 
+ - hosts: all
+   become: true
+   pre_tasks:
+ 
+   - name: update repository index
+     tags: always
+     apt:
+       update_cache: yes
+     changed_when: false
+ 
+ - hosts: all
+   become: true
+   roles:
+     - base
+    
+ - hosts: workstations
+   become: true
+   roles:
+     - workstations
+ 
+ - hosts: web_servers
+   become: true
+   roles:
+     - web_servers
+ 
+ - hosts: db_servers
+   become: true
+   roles:
+     - db_servers
+ 
+ - hosts: file_servers
+   become: true
+   roles:
+     - file_servers
