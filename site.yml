@@ -12,7 +12,7 @@
    become: true
 
   
- - hosts: localhost
+ - hosts: all
    become: true
    vars:
      the_user: "{{ marcel }}"
