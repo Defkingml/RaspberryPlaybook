@@ -7,3 +7,18 @@
    become: true
    roles:
      - workstations
+
+ - hosts: all
+   become: true
+
+  
+ - hosts: localhost
+   become: true
+   vars:
+     the_user: "{{ marcel }}"
+   tasks:
+     - name: change user shell to fish 
+       become: yes
+       user:
+         name: "{{ the_user }}"
+         shell: /bin/fish
