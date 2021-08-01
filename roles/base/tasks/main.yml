@@ -1,16 +1,16 @@
-- hosts: all
-  become: true
-  pre_tasks:
+---
+
+  - name: update repository index
+     tags: always
+     apt:
+       update_cache: yes
+     changed_when: false
 
   - name: install updates
     tags: always
     apt:
       upgrade: dist
       update_cache: yes
-
-- hosts: all
-  become: true
-  tasks:
 
   - name: create marcel user
     tags: always
@@ -33,7 +33,7 @@
       group: root
       mode: 0440
 
-- name: add ssh key for marcel
-   authorized_key:
-     user: marcel
-     key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEv5IiyjMo2+TC10xpNvDjOukmHtpBfvJMfjZ+AyZVmK ansible"
+  - name: add ssh key for marcel
+    authorized_key:
+      user: marcel
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEv5IiyjMo2+TC10xpNvDjOukmHtpBfvJMfjZ+AyZVmK ansible"
