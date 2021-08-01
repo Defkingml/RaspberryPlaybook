@@ -1,12 +1,22 @@
-- name: install unzip
-   package:
-     name: unzip
- 
- - name: install terraform
-   unarchive:
-     src: https://releases.hashicorp.com/terraform/0.12.28/terraform_0.12.28_linux_amd64.zip
-     dest: /usr/local/bin
-     remote_src: yes
-     mode: 0755
-     owner: root
-     group: root
+- name: "install fish shell"
+  apt: 
+    name: fish
+    state: latest
+  tags: installation
+
+- name: "Install Common packages"
+  apt:
+    name: ['runc', 'python-pip', 'docker.io', 'python3-venv', 'docker-compose']
+    state: latest
+  tags: installation, packages
+
+- name: "Python Docker"
+  pip:
+    name: 
+      - docker
+  tags: python
+
+- name: "Install Minikube"
+  shell: 
+    cmd: curl -Lo ~/minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-arm && chmod +x ~/minikube && mkdir -p /usr/local/bin/ && install ~/minikube /usr/local/bin/
+  tags: installation, minikube
