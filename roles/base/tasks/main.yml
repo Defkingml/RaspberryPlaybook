@@ -2,8 +2,8 @@
 
   - name: update repository index
     tags: always
-     apt:
-       update_cache: yes
+      apt:
+        update_cache: yes
      changed_when: false
 
   - name: install updates
