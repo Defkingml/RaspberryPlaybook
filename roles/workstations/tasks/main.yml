@@ -21,5 +21,6 @@
 - name: "Install Minikube"
   shell: 
     cmd: curl -Lo ~/minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-arm && chmod +x ~/minikube && mkdir -p /usr/local/bin/ && install ~/minikube /usr/local/bin/
+    warn: false
   tags: installation, minikube
-  warn: false
+  
