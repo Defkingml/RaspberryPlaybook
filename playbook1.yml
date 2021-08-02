@@ -4,9 +4,11 @@
     - base
     - workstations
 
-    - name: change user shell to fish 
-      become: yes
-      user:
-        name: marcel
-        shell: /bin/fish
-
+ - hosts: all
+   become: true
+   tasks:
+     - name: change user shell to fish 
+       become: yes
+       user:
+         name: marcel
+         shell: /bin/fish
