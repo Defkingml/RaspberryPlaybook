@@ -6,11 +6,13 @@
       upgrade: dist
       update_cache: yes
 
-  - name: create marcel user
+  - name: create marcel user with home directory
     tags: always
     user:
       name: marcel
       groups: root
+      create_home: yes
+      home: /home/marcel
 
   - name: add ssh key for marcel
     tags: always
