@@ -1,0 +1,57 @@
+version: "2"
+# Network Einstellungen fehlen noch Piholenet und IP adresse 192.168.2.225 sowie Hostname Pihole dann funktioniert das skript schon.
+# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "5300:53/tcp"
+      - "5300:53/udp"
+      - "6700:67/udp"
+      - "8001:80/tcp"
+    environment:
+      TZ: 'Europe/Berlin'
+      PATH: '/opt/pihole:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+      ARCH: 'arm64'
+      UBUNTU_SUITE: 'buster'
+      DOCKER_REPO: 'multiarch/debian-debootstrap'
+      PIHOLE_ARCH: 'arm64'
+      S6OVERLAY_RELEASE: 'https://github.com/just-containers/s6-overlay/releases/download/v2.1.0.2/s6-overlay-aarch64.tar.gz'
+      PIHOLE_INSTALL: '/root/ph_install.sh'
+      PHP_ENV_CONFIG: '/etc/lighttpd/conf-enabled/15-fastcgi-php.conf'
+      PHP_ERROR_LOG: '/var/log/lighttpd/error.log'
+      IPv6: 'True'
+      S6_LOGGING: '0'
+      S6_KEEP_ENV: '1'
+      S6_BEHAVIOUR_IF_STAGE2_FAILS: '2'
+      ServerIP: '192.168.2.225'
+      FTL_CMD: 'no-daemon'
+      DNSMASQ_USER: 'root'
+      VERSION: 'v5.3.1'
+      DNS1: '192.168.2.1'
+      DNS2: '8.8.8.8'
+    # WEBPASSWORD: 'set a secure password here or it will be random'
+    # Volumes store your data between container upgrades
+    volumes:
+      - './etc-pihole/:/data/compose/2/etc-pihole/'
+      - './etc-dnsmasq.d/:/data/compose/2/etc-dnsmasq.d/'
+    # Recommended but not required (DHCP needs NET_ADMIN)
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    cap_add:
+      - NET_ADMIN
+      - AUDIT_WRITE
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - FSETID
+      - KILL
+      - MKNOD
+      - NET_BIND_SERVICE
+      - NET_RAW
+      - SETFCAP
+      - SETGID
+      - SETPCAP
+      - SETUID
+      - SYS_CHROOT
+    restart: unless-stopped
