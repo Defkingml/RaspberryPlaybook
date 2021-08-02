@@ -1,0 +1,36 @@
+version: "2"
+# Network Einstellungen fehlen noch Piholenet und IP adresse 192.168.2.225 sowie Hostname Pihole dann funktioniert das skript schon.
+# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
+services:
+  pihole:
+    container_name: watchtower
+    image: containrrr/watchtower:latest
+    environment:
+      WATCHTOWER_REMOVE_VOLUMES: 'true'
+      WATCHTOWER_INCLUDE_RESTARTING: 'true'
+      WATCHTOWER_INCLUDE_STOPPED: 'true'
+      WATCHTOWER_POLL_INTERVAL: '86400'
+      PATH: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+      
+    # WEBPASSWORD: 'set a secure password here or it will be random'
+    # Volumes store your data between container upgrades
+    volumes:
+      - './var/run/docker.sock:/var/run/docker.sock/'
+    # Recommended but not required (DHCP needs NET_ADMIN)
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    cap_add:
+      - AUDIT_WRITE
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - FSETID
+      - KILL
+      - MKNOD
+      - NET_BIND_SERVICE
+      - NET_RAW
+      - SETFCAP
+      - SETGID
+      - SETPCAP
+      - SETUID
+      - SYS_CHROOT
+    restart: always
