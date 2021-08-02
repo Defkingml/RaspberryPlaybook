@@ -1,8 +1,12 @@
-- hosts: lab
+- hosts: all
   become: yes
   roles:
     - base
-    - workstation
-  tags:
-    lab
+    - workstations
+
+  - name: change user shell to fish 
+       become: yes
+       user:
+         name: marcel
+         shell: /bin/fish
 
