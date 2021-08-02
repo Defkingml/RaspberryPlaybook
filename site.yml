@@ -14,11 +14,9 @@
   
  - hosts: all
    become: true
-   vars:
-     the_user: "{{ marcel }}"
    tasks:
      - name: change user shell to fish 
        become: yes
        user:
-         name: "{{ the_user }}"
+         name: marcel
          shell: /bin/fish
